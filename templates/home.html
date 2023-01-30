@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Animated Login Form</title>
+<style>
+body {
+  margin:0px;
+  padding:0px;
+  font-family: sans-serif;
+  background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  
+}  
+ 
+.box {
+  width: 280px;
+  padding: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius:20px;
+  transform: translate(-50%,-50%);
+  background: #191919;
+  opacity: 0.8  ;
+  text-align: center;
+   
+}
+h1 {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 1;
+}
+
+ 
+.box input[type="submit"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid orange;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.25s;
+  cursor: pointer;
+  opacity: 1;
+  font-family: 'Ubuntu', sans-serif;
+}
+.title{
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 80px;
+}
+h2{
+    font-family: 'Ubuntu', sans-serif;
+    color: white;
+}
+.box input[type="submit"]:hover {
+  background: orange;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1 class="title">Google Calendar Events</h1>
+<form class="box" action="/rest/v1/calendar/init"> 
+    <img class="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/><input type="submit" name="" value="Login">
+</form>
+
+</body>
+</html>
