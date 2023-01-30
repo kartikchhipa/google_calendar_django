@@ -17,7 +17,7 @@ CLIENT_SECRETS_FILE = "credentials.json"
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection and REDIRECT URL.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-REDIRECT_URL = 'http://localhost:8000/rest/v1/calendar/redirect/'
+REDIRECT_URL = 'https://googlecalendarevents.netlify.app/rest/v1/calendar/redirect/'
 API_SERVICE_NAME = 'calendar'
 API_VERSION = 'v3'
 
@@ -112,12 +112,12 @@ def credentials_to_dict(credentials):
 
 def GoogleCalendarRedirectView(request):
     if 'error' in request.GET:
-        return redirect('http://localhost:8000/')
+        return redirect('https://googlecalendarevents.netlify.app/')
     
     if 'state' in request.session:
         state = request.session.pop('state')
     else:
-        return redirect('http://localhost:8000/')
+        return redirect('https://googlecalendarevents.netlify.app/')
     
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
         CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
