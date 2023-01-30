@@ -17,7 +17,7 @@ CLIENT_SECRETS_FILE = "credentials.json"
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection and REDIRECT URL.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-REDIRECT_URL = 'https://googlecalendarevents.netlify.app/rest/v1/calendar/redirect/'
+REDIRECT_URL = 'http://localhost:8000/rest/v1/calendar/redirect/'
 API_SERVICE_NAME = 'calendar'
 API_VERSION = 'v3'
 
@@ -49,59 +49,6 @@ def GoogleCalendarInitView(request):
     return redirect(authorization_url)
 
 
-# @api_view(['GET'])
-# def GoogleCalendarRedirectView(request):
-#     # Specify the state when creating the flow in the callback so that it can
-#     if 'error' in request.GET or 'state' not in request.GET or 'code' not in request.GET:
-#         return redirect('http://localhost:8000/')
-#     # verified in the authorization server response.
-#     state = request.session['state']
-
-#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-#         CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
-#     flow.redirect_uri = REDIRECT_URL
-
-#     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
-#     authorization_response = request.get_full_path()
-#     flow.fetch_token(authorization_response=authorization_response)
-
-
-#     # Save credentials back to session in case access token was refreshed.
-#     # ACTION ITEM: In a production app, you likely want to save these
-#     # credentials in a persistent database instead.
-#     credentials = flow.credentials
-#     request.session['credentials'] = credentials_to_dict(credentials)
-#     # Check if credentials are in session
-#     if 'credentials' not in request.session:
-#         return redirect('v1/calendar/init')
-
-#     # Load credentials from the session.
-#     credentials = google.oauth2.credentials.Credentials(
-#         **request.session['credentials'])
-
-#     # Use the Google API Discovery Service to build client libraries, IDE plugins,
-#     # and other tools that interact with Google APIs.
-#     # The Discovery API provides a list of Google APIs and a machine-readable "Discovery Document" for each API
-#     service = googleapiclient.discovery.build(
-#         API_SERVICE_NAME, API_VERSION, credentials=credentials)
-
-#     # Returns the calendars on the user's calendar list
-#     calendar_list = service.calendarList().list().execute()
-
-#     # Getting user ID which is his/her email address
-#     calendar_id = calendar_list['items'][0]['id']
-
-#     # Getting all events associated with a user ID (email address)
-#     events  = service.events().list(calendarId=calendar_id).execute()
-
-#     if not events['items']:
-#         print('No data found.')
-#         return redirect('/home')
-#     elif events['items']:
-#         return Response({"events": events['items']})
-#         return render(request,'calendar_events.html',{"events": events['items']})
-
-
 def credentials_to_dict(credentials):
   return {'token': credentials.token,
           'refresh_token': credentials.refresh_token,
@@ -112,12 +59,12 @@ def credentials_to_dict(credentials):
 
 def GoogleCalendarRedirectView(request):
     if 'error' in request.GET:
-        return redirect('https://googlecalendarevents.netlify.app/')
+        return redirect('/')
     
     if 'state' in request.session:
         state = request.session.pop('state')
     else:
-        return redirect('https://googlecalendarevents.netlify.app/')
+        return redirect('/')
     
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
         CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
